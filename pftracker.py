@@ -182,7 +182,7 @@ def dashboard():
     with st.expander("📥 Download Transactions as Excel"):
         output = io.BytesIO()
         export_df = df.drop(columns=["id", "user_id"])
-        export_df.to_excel(output, index=False, engine='xlsxwriter')
+        export_df.to_excel(output, index=False, engine='openpyxl')
         st.download_button("Download Excel", output.getvalue(), file_name="transactions.xlsx", mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 
 if st.session_state.logged_in:
