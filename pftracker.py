@@ -3,6 +3,7 @@ import sqlite3
 import pandas as pd
 import hashlib
 from datetime import datetime
+from openpyxl.workbook import Workbook
 import io
 
 # Database setup
