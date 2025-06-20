@@ -127,15 +127,37 @@ def dashboard():
     st.title("📊 Personal Finance Tracker")
 
     categories = {
-        "Inflow": ["Salary", "Rental Income", "Interest", "Others"],
-        "Outflow": ["Others"],
-        "Investment": ["PPF", "FD", "MF", "Post Office", "NPS", "Others"],
-        "Insurance": ["LIC", "Health Insurance", "Others"],
-        "Liabilities": ["Car", "Bike", "Others"],
-        "Expenses": ["Home Expenses", "Others"],
-        "Miscellaneous": ["Others"]
+        "Inflow": [
+            "Salary", "Rental Income", "Interest", "Dividends", "Capital Gains",
+            "Freelance Income", "Business Income", "Others"
+        ],
+        "Outflow": [
+            "Loan Repayment", "Credit Card Payment", "EMI", "Charity", "Others"
+        ],
+        "Investment": [
+            "PPF", "FD", "MF", "Post Office", "NPS", "Stocks", "Bonds",
+            "Real Estate Investment", "ETF", "Others"
+        ],
+        "Insurance": [
+            "LIC", "Health Insurance", "Term Insurance", "Vehicle Insurance",
+            "Travel Insurance", "Others"
+        ],
+        "Liabilities": [
+            "Car - Maintenance & Repairs", "Bike - Maintenance & Repairs", "Home Loan", "Personal Loan",
+            "Credit Card Debt", "Others"
+        ],
+        "Expenses": [
+            "Home Expenses", "Groceries", "Utilities (Electricity)", "Utilities (Cable)", "Utilities (Gas)",
+            "Utilities (Maintenance)", "Internet & Mobile", "Rent", "Education (Tuition, Books)",
+            "Medical & Healthcare", "Transportation (Public Transit)", "Transportation (Car)", "Transportation (Bike)",
+            "Dining & Restaurants","Entertainment (Movies, Events)", "Travel & Vacation",
+            "Clothing & Accessories", "Personal Care (Salon, Spa)", "Childcare",
+            "Subscriptions (Streaming, Software)", "Gifts & Donations", "Maintenance & Repairs", "Others"
+        ],
+        "Miscellaneous": [
+            "Gifts", "Subscriptions", "One-time Purchases", "Others"
+        ]
     }
-
     with st.expander("➕ Add Transaction"):
         col1, col2 = st.columns(2)
         with col1:
