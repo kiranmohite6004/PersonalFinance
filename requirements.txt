@@ -1,0 +1,4 @@
+openpyxl
+streamlit
+pandas
+sqlite3
