@@ -180,6 +180,10 @@ def dashboard():
     display_df = df.drop(columns=["id", "user_id"])
     st.dataframe(display_df)
 
+    # Calculate and display the total amount
+    total_amount = display_df['amount'].sum()
+    st.markdown(f"**Total Transaction Amount:** ₹{total_amount:,.2f}")
+
     if st.session_state.is_admin:
         st.info("Admin view: displaying all users' transactions")
 
