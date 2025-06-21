@@ -228,7 +228,7 @@ def dashboard():
 def update_db():
 
     # Read the updated DB and encode to base64
-    with open("data.db", "rb") as f:
+    with open("finance_tracker.db", "rb") as f:
         content = base64.b64encode(f.read()).decode()
 
     # Get the file's SHA if it already exists (needed for updating)
