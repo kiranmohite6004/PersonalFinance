@@ -3,8 +3,17 @@ import sqlite3
 import pandas as pd
 import hashlib
 from datetime import datetime
-from openpyxl.workbook import Workbook
 import io
+import base64
+import requests
+
+
+# GitHub Configuration
+GITHUB_TOKEN = st.secrets["github_token"]
+GITHUB_USERNAME = "kiranmohite6004"
+REPO_NAME = "PersonalFinanace"
+FILE_PATH = "finance_tracker.db"
+BRANCH = "main"  # or 'master'
 
 # Database setup
 conn = sqlite3.connect("finance_tracker.db", check_same_thread=False)
@@ -158,6 +167,7 @@ def dashboard():
             "Gifts", "Subscriptions", "One-time Purchases", "Others"
         ]
     }
+
     with st.expander("➕ Add Transaction"):
         col1, col2 = st.columns(2)
         with col1:
@@ -209,8 +219,45 @@ def dashboard():
     with st.expander("📥 Download Transactions as Excel"):
         output = io.BytesIO()
         export_df = df.drop(columns=["id", "user_id"])
-        export_df.to_excel(output, index=False, engine='openpyxl')
+        export_df.to_excel(output, index=False, engine='xlsxwriter')
         st.download_button("Download Excel", output.getvalue(), file_name="transactions.xlsx", mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+
+def update_db():
+
+    # Read the updated DB and encode to base64
+    with open("data.db", "rb") as f:
+        content = base64.b64encode(f.read()).decode()
+
+    # Get the file's SHA if it already exists (needed for updating)
+    api_url = f"https://api.github.com/repos/{GITHUB_USERNAME}/{REPO_NAME}/contents/{FILE_PATH}"
+    headers = {
+        "Authorization": f"token {GITHUB_TOKEN}",
+        "Accept": "application/vnd.github+json"
+    }
+
+    response = requests.get(api_url, headers=headers)
+    if response.status_code == 200:
+        sha = response.json()["sha"]
+    else:
+        sha = None  # File is new
+
+    # Prepare data to upload
+    commit_message = "Update DB from Streamlit app"
+    payload = {
+        "message": commit_message,
+        "content": content,
+        "branch": BRANCH
+    }
+    if sha:
+        payload["sha"] = sha
+
+    # Upload to GitHub
+    upload_response = requests.put(api_url, headers=headers, json=payload)
+
+    if upload_response.status_code in [200, 201]:
+        st.success("Database synced to GitHub!")
+    else:
+        st.error(f"Failed to upload: {upload_response.json()}")
 
 if st.session_state.logged_in:
     dashboard()
