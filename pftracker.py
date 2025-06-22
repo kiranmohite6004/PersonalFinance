@@ -7,6 +7,7 @@ import io
 import base64
 import requests
 from openpyxl.workbook import Workbook
+import os
 
 
 # GitHub Configuration
@@ -181,7 +182,10 @@ def dashboard():
         if st.button("Add Transaction"):
             add_transaction(st.session_state.user_id, date.strftime("%Y-%m-%d"), category, subcategory, amount, comment)
             st.success("Transaction added successfully")
-            update_db()
+            if not os.path.exists(FILE_PATH):
+                st.error(FILE_PATH + " <= Database file not found before upload")
+            else:
+                update_db()
 
     year_filter = st.selectbox("Select Year", options=["All"] + sorted({datetime.strptime(d, "%Y-%m-%d").year for d in get_transactions(st.session_state.user_id)["date"]}))
     year = None if year_filter == "All" else int(year_filter)
@@ -208,6 +212,10 @@ def dashboard():
                 delete_transactions_by_ids(delete_ids)
                 st.success("Selected transactions deleted")
                 st.rerun()
+              
+            if not os.path.exists(FILE_PATH):
+                st.error(FILE_PATH + " <= Database file not found before upload")
+            else:
                 update_db()
         else:
             st.info("No transactions available to delete.")
