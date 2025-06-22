@@ -185,7 +185,6 @@ def dashboard():
             if not os.path.exists(FILE_PATH):
                 st.error(FILE_PATH + " <= Database file not found before upload")
             else:
-                st.write("Files in directory:", os.listdir())
                 update_db()
 
     year_filter = st.selectbox("Select Year", options=["All"] + sorted({datetime.strptime(d, "%Y-%m-%d").year for d in get_transactions(st.session_state.user_id)["date"]}))
