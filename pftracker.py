@@ -13,7 +13,7 @@ import os
 # GitHub Configuration
 GITHUB_TOKEN = st.secrets["github_token"]
 GITHUB_USERNAME = "kiranmohite6004"
-REPO_NAME = "PersonalFinanace"
+REPO_NAME = "PersonalFinance"
 FILE_PATH = "finance_tracker.db"
 BRANCH = "main"  # or 'master'
 
