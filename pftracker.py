@@ -267,6 +267,21 @@ def update_db():
 
     if upload_response.status_code in [200, 201]:
         st.success("Database synced to GitHub!")
+    elif upload_response.status_code == 409:
+        st.warning("Conflict detected. Retrying with latest SHA...")
+        # Retry logic
+        retry_resp = requests.get(api_url, headers=headers)
+        if retry_resp.status_code == 200:
+            sha = retry_resp.json()["sha"]
+            payload["sha"] = sha
+            retry_upload = requests.put(api_url, headers=headers, json=payload)
+            if retry_upload.status_code in [200, 201]:
+                st.success("Retry succeeded!")
+            else:
+                st.error(f"Retry failed: {retry_upload.status_code}")
+                st.json(retry_upload.json())
+        else:
+            st.error("Failed to refetch latest SHA.")
     else:
         st.error(f"Failed to upload: {upload_response.json()}")
 
