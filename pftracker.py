@@ -266,7 +266,7 @@ def update_db():
     print(api_url)
     print(headers=headers)
     print(json=payload)
-    st.write("==========DEBUGGGGGGGGGGGG==========") 
+    st.write("=====DEBUGGGGGGGGGGGG=====") 
     st.write(api_url)
     st.write(headers=headers)
     st.write(json=payload)
