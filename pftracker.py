@@ -263,6 +263,13 @@ def update_db():
         payload["sha"] = sha
 
     # Upload to GitHub
+    print(api_url)
+    print(headers=headers)
+    print(json=payload)
+    st.write("==========DEBUGGGGGGGGGGGG==========") 
+    st.write(api_url)
+    st.write(headers=headers)
+    st.write(json=payload)
     upload_response = requests.put(api_url, headers=headers, json=payload)
 
     if upload_response.status_code in [200, 201]:
