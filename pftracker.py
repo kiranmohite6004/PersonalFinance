@@ -1,3 +1,52 @@
+"""
+Personal Finance Tracker – Streamlit App
+---------------------------------------
+
+This Streamlit-based application helps users manage and track personal finances securely.
+It supports multi-user access with login, registration, and password reset features,
+and automatically syncs all transaction data to a private GitHub repository.
+
+Main Features:
+- 🔐 User registration, login, and SHA-256 password encryption.
+- ➕ Add, view, and delete categorized financial transactions.
+- 📊 Yearly investment summary and visual analytics using Streamlit charts.
+- 📥 Export all transactions to Excel format.
+- ☁️ Automatic syncing of the local SQLite database (`finance_tracker.db`)
+  to the GitHub repository for backup and version tracking.
+
+GitHub Integration:
+- Repository: `kiranmohite6004/PersonalFinance`
+- Branch: `main`
+- Database file path in repo: `finance_tracker.db`
+- Secure GitHub token access via Streamlit Secrets (not hardcoded in code).
+
+Security:
+- Store your GitHub Personal Access Token (PAT) securely in
+  `.streamlit/secrets.toml` file, not in the script.
+
+Example secrets file (`.streamlit/secrets.toml`):
+    github_token = "YOUR_GITHUB_PERSONAL_ACCESS_TOKEN"
+
+Dependencies:
+- streamlit
+- sqlite3
+- pandas
+- openpyxl
+- requests
+- hashlib
+- datetime
+- base64
+- io
+- os
+
+Usage:
+Run this Streamlit app from terminal or PyCharm:
+    streamlit run pftracker.py
+
+Author: Kiran Madhukar Mohite
+Date: October 2025
+"""
+
 import streamlit as st
 import sqlite3
 import pandas as pd
